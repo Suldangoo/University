@@ -20,7 +20,7 @@ public class PlayerCtrl : MonoBehaviour
         this.rigid = GetComponent<Rigidbody>();
         this.item = GameObject.Find("Score");
 
-        MeasureDistance("Item");
+        // MeasureDistance("Item");
     }
 
     void Update()
@@ -30,28 +30,32 @@ public class PlayerCtrl : MonoBehaviour
             this.rigid.AddForce(transform.up * this.jumpForce);
         }
 
-        // // 상하좌우 이동
-        int key = 0;
+        // 상하좌우 이동
+        // int key = 0;
 
-        if(Input.GetKey(KeyCode.RightArrow)) {
-            key = 1;
-            this.rigid.AddForce(transform.right * key * this.walkForce);
-        }
+        // if(Input.GetKey(KeyCode.RightArrow)) {
+        //     key = 1;
+        //     this.rigid.AddForce(transform.right * key * this.walkForce);
+        // }
 
-        if(Input.GetKey(KeyCode.LeftArrow)) {
-            key = -1;
-            this.rigid.AddForce(transform.right * key * this.walkForce);
-        }
+        // if(Input.GetKey(KeyCode.LeftArrow)) {
+        //     key = -1;
+        //     this.rigid.AddForce(transform.right * key * this.walkForce);
+        // }
 
-        if(Input.GetKey(KeyCode.UpArrow)) {
-            key = 1;
-            this.rigid.AddForce(transform.forward * key * this.walkForce);
-        }
+        // if(Input.GetKey(KeyCode.UpArrow)) {
+        //     key = 1;
+        //     this.rigid.AddForce(transform.forward * key * this.walkForce);
+        // }
 
-        if(Input.GetKey(KeyCode.DownArrow)) {
-            key = -1;
-            this.rigid.AddForce(transform.forward * key * this.walkForce);
-        }
+        // if(Input.GetKey(KeyCode.DownArrow)) {
+        //     key = -1;
+        //     this.rigid.AddForce(transform.forward * key * this.walkForce);
+        // }
+
+
+        // Get Axis를 사용하여 3차원 조작
+        this.transform.Translate(this.walkForce * Input.GetAxis("Horizontal") * Time.deltaTime, this.walkForce * Input.GetAxis("UpDown") * Time.deltaTime, this.walkForce * Input.GetAxis("Vertical") * Time.deltaTime);
 
         // 재시작 버튼
         if (Input.GetKeyDown(KeyCode.R)) {
@@ -59,8 +63,8 @@ public class PlayerCtrl : MonoBehaviour
         }
 
         // 매 프레임마다 player가 x좌표로 0.1f씩 이동
-        transform.position += new Vector3(0.1f * Time.deltaTime, 0, 0);
-        MeasureDistance("Item (4)");
+        // transform.position += new Vector3(0.1f * Time.deltaTime, 0, 0);
+        // MeasureDistance("Item (4)");
     }
 
     void OnTriggerEnter(Collider other) {
