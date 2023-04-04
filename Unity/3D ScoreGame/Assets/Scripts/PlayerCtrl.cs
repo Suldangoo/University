@@ -59,7 +59,7 @@ public class PlayerCtrl : MonoBehaviour
         }
 
         // 매 프레임마다 player가 x좌표로 0.1f씩 이동
-        transform.position += new Vector3(0.1f, 0, 0);
+        transform.position += new Vector3(0.1f * Time.deltaTime, 0, 0);
         MeasureDistance("Item (4)");
     }
 
