@@ -9,16 +9,20 @@ public class PlayerCtrl : MonoBehaviour
     Rigidbody rigid;
     public float jumpForce = 250.0f; // 점프력
     public float walkForce = 5.0f; // 이동속도
+    public GameObject prefabs; // 파티클 프리팹
+    GameObject fx;
 
     GameObject item;
     public int score = 0; // 총 점수
 
     GameObject obj; // 거리를 측정하고싶은 오브젝트
+    GameObject image;
 
     void Start()
     {
         this.rigid = GetComponent<Rigidbody>();
         this.item = GameObject.Find("Score");
+        this.image = GameObject.Find("Image");
 
         // MeasureDistance("Item");
     }
@@ -55,7 +59,7 @@ public class PlayerCtrl : MonoBehaviour
 
 
         // Get Axis를 사용하여 3차원 조작
-        this.transform.Translate(this.walkForce * Input.GetAxis("Horizontal") * Time.deltaTime, this.walkForce * Input.GetAxis("UpDown") * Time.deltaTime, this.walkForce * Input.GetAxis("Vertical") * Time.deltaTime);
+        this.transform.Translate(this.walkForce * Input.GetAxis("Horizontal") * Time.deltaTime, 0f, this.walkForce * Input.GetAxis("Vertical") * Time.deltaTime);
 
         // 재시작 버튼
         if (Input.GetKeyDown(KeyCode.R)) {
@@ -69,9 +73,12 @@ public class PlayerCtrl : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         score += 10;
+        GetComponent<AudioSource>().Play();
+        fx = Instantiate(prefabs, this.transform);
 
         if (score >= 0) {
             this.item.GetComponent<Text>().text = "Score : " + score.ToString();
+            this.image.GetComponent<Image>().fillAmount += 0.1f;
         }
 
         Destroy(other.gameObject);
