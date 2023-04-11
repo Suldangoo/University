@@ -16,7 +16,7 @@ public class PlayerCtrl : MonoBehaviour
     public int score = 0; // 총 점수
 
     GameObject obj; // 거리를 측정하고싶은 오브젝트
-    GameObject image;
+    GameObject image; // UI 이미지를 담을 변수
 
     void Start()
     {
@@ -74,6 +74,7 @@ public class PlayerCtrl : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         score += 10;
         GetComponent<AudioSource>().Play();
+        GetComponent<AudioSource>().pitch += 0.1f;
         fx = Instantiate(prefabs, this.transform);
 
         if (score >= 0) {
