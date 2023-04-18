@@ -18,6 +18,23 @@ public class PlayerCtrl : MonoBehaviour
     GameObject obj; // 거리를 측정하고싶은 오브젝트
     GameObject image; // UI 이미지를 담을 변수
 
+    public void LButtonDown() {
+        this.transform.Translate(this.walkForce * -0.2f, 0f, 0f);
+    }
+
+    public void RButtonDown() {
+        this.transform.Translate(this.walkForce * 0.2f, 0f, 0f);
+    }
+
+    public void UButtonDown() {
+        this.transform.Translate(0f, 0f, this.walkForce * 0.2f);
+    }
+
+    public void DButtonDown() {
+        this.transform.Translate(0f, 0f, this.walkForce * -0.2f);
+    }
+
+
     void Start()
     {
         this.rigid = GetComponent<Rigidbody>();
