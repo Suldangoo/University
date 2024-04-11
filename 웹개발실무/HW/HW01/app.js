@@ -14,4 +14,4 @@ app.use('/boards', boards);
 
 app.listen(port, () => {
     console.log(`Express is running on http://${hostname}:${port}/`);
-  } );  
+});
