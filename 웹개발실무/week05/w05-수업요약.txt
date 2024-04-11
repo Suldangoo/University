@@ -1,0 +1,501 @@
+﻿'24/04/02 <dy241WebDev> 5주차 수업요약(stu)
+
+[실습] 5주차
+=================
+[실습] 5주차
+#공식 홈페이지
+http://nodejs.org/
+
+http://npmjs.com
+http://expressjs.com
+================
+C:\dev\dev\nodejs-ex
+C:\dev\dev\nodejs-ex-stu
+---------------------------
+[강의] 5주차
+
+# http
+# express
+================================
+
+==========================
+// http 모듈
+==========================
+
+==========================
+// express 모듈
+==========================
+-------------------------------------------
+# express
+-------------------------------------------
+// ./04express-test/app-01.js
+const express = require('express')
+
+// 다음 문장 추가
+
+
+// 다음 문장 추가
+// error
+
+app.      (port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+------
+node app
+
+http://localhost:3000
+http://localhost:3000/sayhello/hskim
+
+http://localhost:3000/users
+-------------------------------------------
+# express
+-------------------------------------------
+// ./03express-ex/app-01.js
+
+
+
+-------------------------------------------
+// ./03express-ex/app-02.js
+
+
+
+// 모든 연락처 가져오기
+app.get("/contacts", (req, res) => {
+  res.status(200).send("Contacts Page");
+});
+
+// 새 연락처 추가하기
+app.post("/contacts", (req, res) => {
+  res.status(201).send("Create Contacts");
+});
+
+app.listen(port, () => {
+  console.log(`${port}번 포트에서 서버 실행 중`);
+});
+
+-------------------------------------------
+// ./03express-ex/app-03.js
+
+
+
+// 모든 연락처 가져오기
+app.get("/contacts", (req, res) => {
+  res.status(200).send("Contacts Page");
+});
+
+// 새 연락처 추가하기
+app.post("/contacts", (req, res) => {
+  res.status(201).send("Create Contacts");
+});
+
+// 연락처 상세보기
+app.get("/contacts/:id", (req, res) => {
+  res.status(200).send(`View Contact for ID: ${req.params.id}`);
+});
+
+// 연락처 수정하기
+app.put("/contacts/:id", (req, res) => {
+  res.status(200).send(`Update Contact for ID: ${req.params.id}`);
+});
+
+// 연락처 삭제하기
+app.delete("/contacts/:id", (req, res) => {
+  res.status(200).send(`Delete Contact for ID: ${req.params.id}`);
+});
+
+app.listen(port, () => {
+  console.log(`${port}번 포트에서 서버 실행 중`);
+});
+
+-------------------------------------------
+// ./03express-ex/app-04.js
+
+
+
+// 모든 연락처 가져오기
+router.get("/contacts", (req, res) => {
+  res.status(200).send("Contacts Page");
+});
+
+// 새 연락처 추가하기
+router.post("/contacts", (req, res) => {
+  res.status(201).send("Create Contacts");
+});
+
+// 연락처 상세보기
+router.get("/contacts/:id", (req, res) => {
+  res.status(200).send(`View Contact for ID: ${req.params.id}`);
+});
+
+// 연락처 수정하기
+router.put("/contacts/:id", (req, res) => {
+  res.status(200).send(`Update Contact for ID: ${req.params.id}`);
+});
+
+// 연락처 삭제하기
+router.delete("/contacts/:id", (req, res) => {
+  res.status(200).send(`Delete Contact for ID: ${req.params.id}`);
+});
+
+app.use(router);
+
+app.listen(port, () => {
+  console.log(`${port}번 포트에서 서버 실행 중`);
+});
+
+-------------------------------------------
+// ./03express-ex/app-06.js
+
+
+
+app.listen(port, () => {
+  console.log(`${port}번 포트에서 서버 실행 중`);
+});
+
+-------------------------------------------
+----------------------------------------------
+1. OK 반환 서버 생성
+// OK 반환 서버 생성
+// ./05http-ok/ok-http-01.js
+
+
+
+
+// res.end("OK").listen(3000, () => {
+//     console.log(`3000번 포트에서 서버 실행중`);
+// });
+--------
+http://localhost:3000
+
+=>
+OK
+----------------------------------------------
+2. 라우팅: url 경로에 따라 다른 응답
+
+// 라우터 서버 생성
+http://localhost:3000/user
+http://localhost:3000/picture
+
+----------------------------------------------
+// 라우터 서버 생성
+// ./05http-ok/ok-http-02.js
+const http = require('http');
+
+const url = require('url');
+http
+     .createServer( (req, res) => {
+       const path = url.parse(req.url, true).pathname;  
+       res.setHeader("Content-Type", "text/html");
+
+       if ( path === "/user") {
+              res.end("[user] name : gdhong, age: 24");
+       } else if ( path === "/picture") {
+              res.end(`<ul>
+                  <li>picture 1</li>
+                  <li>picture 2</li>
+                  <li>picture 3</li>   
+               </ul>
+              `);
+       } else {
+               res.statusCode = 404;
+               res.end("404 page not found");
+       }
+   })
+   .listen(3000, () => {console.log(`3000번 포트에서 서버 실행중`)});
+   
+----------------------------------------------
+http://localhost:3000/user
+=> 
+[user] name : gdhong, age: 24
+
+http://localhost:3000/picture
+=> 
+(html 로 변환)
+
+http://localhost:3000/about
+=> 
+404 page not found
+-------------
+[참고] url
+http://localhost:3000/user
+
+http://localhost:3000/user/file.html?key1=value1#hash
+
+pathname: /user/file.html
+query: ?key1=value1
+-------------
+[참고] url.parse()
+ url.parse(req.url, true).pathname; 
+
+url 모듈을 사용해 요청(req) 으로 받은 url 의 path 를 받아온다
+
+http://localhost:3000/user 경우,
+
+pathname: /user
+ 
+두번째 매개변수: true
+(쿼리스트링도 함게 파싱할 지 여부 결정)
+?키=값
+
+예)
+?key1=kim&age=24
+-------------
+
+----------------------------------------------
+// http 서버 리팩터링(refactoring)
+
+// 라우터 처리 분리
+// ./05http-ok/ok-http-03.js
+const http = require('http');
+const url = require('url');
+http
+     .createServer( (req, res) => {
+       const path = url.parse(req.url, true).pathname;  
+       res.setHeader("Content-Type", "text/html");
+
+       if ( path === "/user") {
+
+       } else if ( path === "/picture") {
+
+       } else {
+
+       }
+   })
+   .listen(3000, () => {console.log(`3000번 포트에서 서버 실행중`)});
+   
+
+----------------------------------------------
+----------------------------------------------
+// http 서버 동적으로 응답
+
+// 동적으로 응답: user() 함수 (수정)
+// ./05http-ok/ok-http-11.js
+const http = require('http');
+const url = require('url');
+http
+     .createServer( (req, res) => {
+       const path = url.parse(req.url, true).pathname;  
+       res.setHeader("Content-Type", "text/html");
+
+       if ( path === "/user") {
+
+       } else if ( path === "/picture") {
+
+       } else {
+
+       }
+   })
+   .listen(3000, () => {console.log(`3000번 포트에서 서버 실행중`)});
+   
+
+----------------------------------------------
+http://localhost:3000/user
+=> 
+[user] name : undefined, age: undefined
+
+http://localhost:3000/user?name=gdchoi&age=34
+=>
+[user] name : gdchoi, age: 34
+
+----------------------------------------------
+// http 서버 라우터 리팩터링
+
+// if 문 리팩터링: urlMap() 사용
+// ./05http-ok/ok-http-12.js
+const http = require('http');
+const url = require('url');
+http
+     .createServer( (req, res) => {
+       const path = url.parse(req.url, true).pathname;  
+       res.setHeader("Content-Type", "text/html");
+
+       if ( path in urlMap) {
+              urlMap[path](req, res);        // urlMap 에 path 값으로 매핑된 함수 실행
+       } else {
+              notFound(req, res);            // notFound() 함수 실행
+       }
+   })
+   .listen(3000, () => {console.log(`3000번 포트에서 서버 실행중`)});
+   
+const user = (req, res) => {
+             const userInfo = url.parse(req.url, true).query;  // querystring
+             res.end(`[user] name : ${userInfo.name}, age: ${userInfo.age}`);
+};
+
+const picture = (req, res) => {
+              res.end(`<ul>
+                  <li>picture 1</li>
+                  <li>picture 2</li>
+                  <li>picture 3</li>   
+               </ul>
+              `);a
+};
+
+const notFound = (req, res) => {
+               res.statusCode = 404;
+               res.end("404 page not found");
+};
+
+const urlMap = {
+      "/": (req, res) =>  res.end("HOME") ,
+      "/user" : user ,
+      "/picture" : picture ,
+};
+----------------------------------------------
+[참고] urlMap9)
+
+urlMap() 키: path 문자열
+            값: 함수
+
+-------------
+[참고] in 연산자
+
+ex) in 연산자: 객체의 키가 있는 지 검사
+const abc = { "a": 1, "b": 2, "c": 3};
+"a" in abc;     // true
+"b" in abc;     // true
+"c" in abc;     // true
+"d" in abc;     // false
+
+-------------
+
+----------------------------------------------
+----------------------------------------------
+# express.Router(): Router() 클래스 사용
+라우트 처리를 여러 개의 파일로 분리해서
+기능에 맞게 구현하여 사용
+
+라우트 모듈 분리 => 라우트를 기능별로 관리
+ㄴ
+// [routes] 폴더 생성
+               [routes]/customer.js
+                         /product.js
+                         /app.js
+
+cf)
+https://github.com/seungwongo/node-project
+// ./node-project-main/routes/customer.js
+----------------------------------------------
+// ./05express-router/app.js
+
+
+app.use(express.json( {
+      limit: '50mb'
+} ));
+
+app.listen(3000, () => {
+     console.log(`3000번 포트에서 서버 실행중`);
+});
+----------------------------------------------
+// ./05express-router/routes/customer.js
+
+
+// app.js에서 기본 경로에 /customer 를 사용
+
+
+
+----------------------------------------------
+// ./05express-router/routes/product.js
+const express = require('express');
+const router = express.Router();
+
+// app.js에서 기본 경로에 /product 를 사용
+router.get('/', (req, res) => {
+        res.send('상품 정보 조회'); 
+});
+
+router.post('/insert', (req, res) => {
+        res.send('상품 정보 추가'); 
+});
+
+router.put('/update', (req, res) => {
+       res.send('상품 정보 수정'); 
+});
+
+router.delete('/delete', (req, res) => {
+       res.send('상품 정보 삭제');
+});
+
+module.exports = router;
+----------------------------------------------
+http://localhost:3000/customer
+=> 
+고객 정보 조회
+
+http://localhost:3000/product
+=> 
+상품 정보 조회
+
+----------------------------------------------
+# express 웹 프레임워크
+
+
+----------------------------------------------
+// ./07express-server/
+
+cd 07express-server
+npm init
+npm i express
+
+npm i nodemon -g -save-dev -D
+
+----------------------------------------------
+// package.json
+{
+  "name": "07express-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "${file}",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
+
+----------------------------------------------
+// ./07express-server/app-00.js
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+    res.send("HOME");
+});
+
+app.listen(3000, () => {
+    console.log(`3000번 포트에서 서버 실행중`);
+});
+----------------------------------------------
+// ./07express-server/app-01.js
+const express = require('express');
+const url = require('url');
+const app = express();
+const port = 3000;
+
+
+
+app.listen(port, () => {
+    console.log(`${port}번 포트에서 서버 실행중`);
+});
+
+function user(req, res) {
+    const user = url.parse(req.url, true).query;
+    res.json(`[user] name: ${user.name}, age: ${user.age}`);
+};
+
+function picture(req, res) {
+    // res.set("Content-Type", "text/html");
+    res.setHeader('Content-Type', 'text/html');
+    res.send(JSON.stringify(`<ul><li>picture1</li><li>picture2</li><li>picture3</li></ul>`));
+};
+============================
+
+==========================
+
+=======================
+
