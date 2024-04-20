@@ -1,0 +1,16 @@
+// 1) 문자열 병합: +
+
+function hello(name) {
+  console.log("Hello " + name + ", Welcome!");
+}
+
+hello("Kim");
+
+// 2) 템플릿 리터럴: 백틱(`), $
+
+function hello2(name) {
+  let name2 = "John";
+  console.log(`Hello ${name2} , Welcome! ${name}`);
+}
+
+hello2("Lee");
