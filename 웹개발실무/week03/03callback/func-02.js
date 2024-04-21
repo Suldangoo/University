@@ -3,4 +3,3 @@ let varB = function() {
 }
 
 varB();
-
