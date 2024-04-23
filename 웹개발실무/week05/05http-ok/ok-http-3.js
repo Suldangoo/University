@@ -1,3 +1,5 @@
+// 중간고사에선 URL을 주면 실행 결과가 어떻게 나올지 적는 것
+
 const http = require('http');
 const url = require('url');
 
@@ -17,8 +19,7 @@ http.createServer( (req, res) => {
 });
 
 const user = (req, res) => {
-    const userInfo = url.parse(req.url, true).query;
-    res.end(`[user] name : ${userInfo.name}, age : ${userInfo.age}`);
+    res.end("[user] name : gdhong, age : 24");
 };
 
 const picture = (req, res) => {
@@ -34,5 +35,3 @@ const notFound = (req, res) => {
     res.statusCode = 404;
     res.end("404 page not found");
 }
-
-// localhost:3000/user?name=gdchoi&age=34

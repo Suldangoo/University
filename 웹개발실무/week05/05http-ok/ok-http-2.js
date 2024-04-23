@@ -3,7 +3,7 @@
 const http = require('http');
 const url = require('url');
 
-const server = http.createServer( (req, res) => {
+http.createServer( (req, res) => {
     const path = url.parse(req.url, true).pathname; // 패스명 가져오기
     res.setHeader("Content-Type", "text/html");
 
@@ -20,8 +20,6 @@ const server = http.createServer( (req, res) => {
         res.statusCode = 404;
         res.end("404 page not found");
     }
-});
-
-server.listen(3000, () => {
+}).listen(3000, () => {
     console.log("3000번 포트에서 실행 중")
 });
