@@ -14,8 +14,9 @@ app.get("/contacts", (req, res) => {
 });
 
 // 새 연락처 추가하기
-app.post("/contacts", (req, res) => {
-    res.status(201).send("Create Contacts");
+app.post("/contacts/:id", (req, res) => {
+    let id = req.params.id;
+    res.status(201).send(`Create Contacts : ${id}`);
 });
 
 app.listen(port, () => {
