@@ -21,12 +21,18 @@ var server = http.createServer(function (req, res) {
       // 이미지
       var parsed = url.parse(req.url);
       var path = __dirname + parsed.pathname;
-      fs.access(path, fuction(err) {
-         
+      fs.access(path, function(err) {
+         if ( err ) {
+            res.statusCode = 404;
+            res.end('Not Found');
+            return;
+         }
+         var is = fs.createReadStream(path);
+         is.pipe(res);
       });
    }
    else if ( req.method.toLowerCase() == 'post') {
-      
+      addNewMovie(req, res);
    }
    else {
       res.statusCode = 400;
@@ -34,7 +40,9 @@ var server = http.createServer(function (req, res) {
    }
 });
 
-server.listen(3000);
+server.listen(3000, () => {
+   console.log('3000 포트에서 서버 실행중')
+});
 
 function addNewMovie(req, res) {
    var form = new formidable.IncomingForm();
@@ -47,12 +55,31 @@ function addNewMovie(req, res) {
          return;
       }
 
+      var title = fields.title;
+      var director = fields.director;
+      var year = fields.year;
+
+      var poster = files.poster;
       //poster.path;
+      var ext = pathUtil.extname(poster.name);
+      var newFileName = title + ext;
+      var newPath = uploadDir + pathUtil.sep + newFileName;
 
-      
-       
+      fs.renameSync(poster.path, newPath);
+      var url = '/images/' + newFileName;
+
+      var info = {
+         title : title,
+         director : director,
+         year : year,
+         poster : url
+      };
+      movieList.push(info);
+
+      res.statusCode = 302;
+      res.setHeader('Location', '.');
+      res.end();
    });
-
 }
 
 function showList(req, res) {
@@ -68,12 +95,12 @@ function showList(req, res) {
    html += '<h1>Favorite Movie</h1>';
    html += '<div>';
    html += '<ul>';
-
+   movieList.forEach(function(movie) {
       html += '<li>';
-
-
-
-
+      if (movie.poster) {
+         html += '<img src = "' + movie.poster + '">';
+      }
+      html += movie.title + '(' + movie.director + ',' + movie.year + ')' + '</li>';
    });
    html += '</ul>';
    html += '</div>';
@@ -92,6 +119,6 @@ function showList(req, res) {
    html += '</body>';
    html += '</html>';
 
-// 여기에 작성
-   res.      ;
+   res.writeHeader(200, { 'Content-Type' : 'text/html; charset=utf-8'});
+   res.end(html);
 }
