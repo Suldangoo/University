@@ -12,8 +12,5 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "formidable": "^1.2.6"
-  }
+  "description": ""
 }
