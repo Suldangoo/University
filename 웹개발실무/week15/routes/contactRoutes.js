@@ -7,7 +7,7 @@ const {
   updateContact,
   deleteContact,
   addContactForm,
-} = require("../controllers/contactController");
+} = require("../controllers/contactController-stu");
 
 // Render routes
 router.route("/").get(getAllContacts);

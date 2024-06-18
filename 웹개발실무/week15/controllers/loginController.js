@@ -8,8 +8,7 @@ const getRegister = (req, res) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-
-
+  const {username, password, password2} = req.body;
   if (password === password2) {
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log(hashedPassword);
